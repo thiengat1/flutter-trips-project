@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Lewis
  * @Date: 2023-01-10 10:44:11
- * @LastEditTime: 2023-01-10 17:34:53
+ * @LastEditTime: 2023-01-12 13:48:24
  * @LastEditors: Lewis
  */
 import 'package:flutter/material.dart';
@@ -58,9 +58,12 @@ class _TripListState extends State<TripList> {
       ),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
-        child: Image.asset(
-          'images/${trip.img}',
-          height: 50.0,
+        child: Hero(
+          tag: 'location-img-${trip.img}',
+          child: Image.asset(
+            'images/${trip.img}',
+            height: 50.0,
+          ),
         ),
       ),
       trailing: Text('\$${trip.price}'),

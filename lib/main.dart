@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Lewis
  * @Date: 2023-01-06 10:20:42
- * @LastEditTime: 2023-01-07 11:15:51
+ * @LastEditTime: 2023-01-12 13:02:04
  * @LastEditors: Lewis
  */
 import 'package:flutter/material.dart';
@@ -19,9 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title:'Trips',
-      home:Home()
-    );
+      title: 'Trips', 
+      home: Home()
+      );
   }
 }
-

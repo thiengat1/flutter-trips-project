@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Lewis
  * @Date: 2023-01-10 10:58:01
- * @LastEditTime: 2023-01-10 17:32:21
+ * @LastEditTime: 2023-01-12 13:51:45
  * @LastEditors: Lewis
  */
 import 'package:flutter/material.dart';
@@ -32,11 +32,14 @@ class Details extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ClipRRect(
-              child: Image.asset(
-                'images/${trip.img}',
-                height: 360,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
+              child: Hero(
+                tag:'location-img-${trip.img}',
+                child: Image.asset(
+                  'images/${trip.img}',
+                  height: 360,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
               ),
             ),
             const SizedBox(height: 30),
