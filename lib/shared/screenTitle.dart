@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Lewis
  * @Date: 2023-01-10 09:53:25
- * @LastEditTime: 2023-01-12 13:23:51
+ * @LastEditTime: 2023-01-13 13:29:17
  * @LastEditors: Lewis
  */
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ class ScreenTitle extends StatelessWidget {
     return TweenAnimationBuilder(
       duration: const Duration(milliseconds: 500),
       tween: Tween<double>(begin: 0, end: 1),
+      curve: Curves.easeIn,
       builder: (BuildContext context, double val, child) {
         return Opacity(
             opacity: val,

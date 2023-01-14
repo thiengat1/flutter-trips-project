@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Lewis
  * @Date: 2023-01-10 10:44:11
- * @LastEditTime: 2023-01-12 13:48:24
+ * @LastEditTime: 2023-01-13 17:32:12
  * @LastEditors: Lewis
  */
 import 'package:flutter/material.dart';
@@ -18,30 +18,41 @@ class TripList extends StatefulWidget {
 
 class _TripListState extends State<TripList> {
   final List<Widget> _tripTiles = [];
-  final GlobalKey _listKey = GlobalKey();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _addTrips();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _addTrips();
+    });
   }
 
   void _addTrips() {
     List<Trip> trips = [
-      Trip(title: 'Beach Paradise', price: '350', nights: '3', img: 'beach.png'),
+      Trip(
+          title: 'Beach Paradise', price: '350', nights: '3', img: 'beach.png'),
       Trip(title: 'City Break', price: '400', nights: '5', img: 'city.png'),
       Trip(title: 'Ski Adventure', price: '750', nights: '2', img: 'ski.png'),
       Trip(title: 'Space Blast', price: '600', nights: '4', img: 'space.png'),
     ];
+
+    Future ft = Future(() {});
     for (var trip in trips) {
-      _tripTiles.add(_buildTile(trip));
+      ft = ft.then((_) {
+        return Future.delayed(const Duration(milliseconds: 100), () {
+          _tripTiles.add(_buildTile(trip));
+          _listKey.currentState!.insertItem(_tripTiles.length - 1);
+        });
+      });
     }
   }
 
   Widget _buildTile(Trip trip) {
     return ListTile(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Details(trip: trip)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Details(trip: trip)));
       },
       contentPadding: const EdgeInsets.all(25),
       title: Column(
@@ -70,13 +81,19 @@ class _TripListState extends State<TripList> {
     );
   }
 
+  final Tween<Offset> _offset =
+      Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return AnimatedList(
       key: _listKey,
-      itemCount: _tripTiles.length,
-      itemBuilder: (context, index) {
-        return _tripTiles[index];
+      initialItemCount: _tripTiles.length,
+      itemBuilder: (context, index, animation) {
+        return SlideTransition(
+          position: animation.drive(_offset),
+          child: _tripTiles[index],
+        );
       },
     );
   }
